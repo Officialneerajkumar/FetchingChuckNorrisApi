@@ -12,10 +12,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/ecommerce-app")
@@ -58,5 +55,11 @@ public class OrderController {
         order.setAddress(address);
 
         return order;
+    }
+
+    @GetMapping("/getOrderById")
+    public ResponseEntity<Order> getOrderById(@RequestParam int orderId){
+        Order order = service.getOrderById(orderId);
+        return new ResponseEntity<>(order,HttpStatus.FOUND);
     }
 }

@@ -9,13 +9,13 @@ import com.example.Ecommerce.Api.repository.OrderReposirtory;
 import com.example.Ecommerce.Api.repository.ProductRepository;
 import com.example.Ecommerce.Api.repository.UserRepository;
 import com.example.Ecommerce.Api.service.Service;
+import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 //Steps:
 //        1. Create users
@@ -54,6 +54,23 @@ public class CommonController {
         return new ResponseEntity<>("Address created",HttpStatus.CREATED);
     }
 
+    @GetMapping("/getUserById")
+    public ResponseEntity<User> getUserById(@RequestParam int userId){
+        User user = service.getUserById(userId);
+        return new ResponseEntity<>(user,HttpStatus.FOUND);
+    }
+
+    @GetMapping("/getProduct")
+    public ResponseEntity<List<Product>> getProduct(@Nullable @RequestParam String category){
+        List<Product> products = service.getProduct(category);
+        return new ResponseEntity<>(products,HttpStatus.FOUND);
+    }
+
+    @DeleteMapping("/deleteById")
+    public ResponseEntity<String> deleteProductById(@RequestParam int productId){
+        service.deleteProductById(productId);
+        return new ResponseEntity<>("Product deleted ",HttpStatus.OK);
+    }
 
 
 }
